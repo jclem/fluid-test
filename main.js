@@ -41,7 +41,7 @@ if (sid) {
   container = containerResp.container
   services = containerResp.services
   const containerId = await container.attach()
-  history.replaceState(null, '', `/${containerId}`)
+  history.replaceState(null, '', `/${containerId}${location.search}`)
 }
 
 // Instantiate the CodeMirror editor.
@@ -116,3 +116,39 @@ function onSequenceDelta(event) {
 }
 
 container.initialObjects.content.on('sequenceDelta', onSequenceDelta)
+
+const urlParams = new URLSearchParams(location.search)
+const moby = urlParams.get('moby')
+
+if (moby) {
+  setTimeout(() => {
+    insertMobyDick(moby)
+  }, 1000)
+}
+
+async function insertMobyDick(count) {
+  const source = localStorage.mobyDick.slice(
+    0,
+    count === 'all' ? 0 : parseInt(count, 10)
+  )
+  for (let ch of source) {
+    const tr = view.state.update({
+      changes: {
+        from: view.state.doc.length,
+        insert: ch
+      }
+    })
+
+    view.dispatch(tr)
+
+    await wait(randomBetween(0, 10))
+  }
+}
+
+function wait(ms) {
+  return new Promise(r => setTimeout(r, ms))
+}
+
+function randomBetween(min, max) {
+  return Math.floor(Math.random() * (max - min) + min)
+}
