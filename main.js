@@ -120,7 +120,7 @@ container.initialObjects.content.on('sequenceDelta', onSequenceDelta)
 const urlParams = new URLSearchParams(location.search)
 const moby = urlParams.get('moby')
 
-if (moby) {
+if (isNew && moby) {
   setTimeout(() => {
     insertMobyDick(moby)
   }, 1000)
