@@ -44,8 +44,10 @@ if (sid) {
   history.replaceState(null, '', `/${containerId}`)
 }
 
+console.log(container.initialObjects.content)
 // Instantiate the CodeMirror editor.
 const view = new EditorView({
+  doc: container.initialObjects.content.getText(),
   parent: document.querySelector('#app'),
   extensions: [basicSetup, collabField(container.initialObjects.content)]
 })
